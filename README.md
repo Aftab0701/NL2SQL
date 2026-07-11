@@ -1,4 +1,3 @@
-# NL2SQL
 # Query Desk — Natural Language to SQL Engine
 
 Type a question in plain English, see the SQL it turns into, and run it against a real
@@ -136,16 +135,16 @@ tool, not for anything transactional. For the NL→SQL generation step specifica
 (the more expensive LLM call), I'd cache on the *question text* itself with a longer
 TTL, since identical English almost always should produce identical SQL.
 
-## Deploying to Netlify (Frontend)
+## Deploying to Netlify (Full-Stack)
 
-To deploy this application to Netlify:
+The entire application (Frontend + Backend API + Database) can be deployed seamlessly as a single unit on Netlify using **Netlify Functions**.
 
 1. Push this repository to GitHub/GitLab/Bitbucket.
-2. Create a new site on Netlify and link the repository.
-3. The included `netlify.toml` automatically configures the **publish directory** to `frontend`.
-4. Netlify will deploy the static frontend seamlessly.
-5. **Important**: Since the backend is written in Python (FastAPI), it cannot run natively on Netlify. You must deploy the backend to a service like **Render**, **Railway**, or **Fly.io**. 
-6. Once your backend is deployed, update the `[[redirects]]` section in the `netlify.toml` to point to your new live backend URL (replace `https://your-backend-url.onrender.com`). Netlify will act as a reverse proxy, avoiding any CORS issues!
+2. Create a new site on Netlify and choose "Import an existing project".
+3. **Important:** Set the **Base directory** to `nl2sql` (or whatever the root folder is named in your repo).
+4. The included `netlify.toml` automatically configures the API redirects, and Netlify will detect the `netlify/functions/api.js` serverless backend.
+5. In your Netlify Site Settings, add an Environment Variable: `GEMINI_API_KEY` with your Google AI Studio API key.
+6. Deploy the site! The `npm install` and database seeding scripts will run automatically in the cloud.
 
 ## Assumptions & trade-offs
 
