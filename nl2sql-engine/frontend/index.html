@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Query Desk — Natural Language to SQL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+
+<div class="app">
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark">§</span>
+      <div class="brand-text">
+        <h1>Query Desk</h1>
+        <p>Describe what you want. Watch it become SQL.</p>
+      </div>
+    </div>
+    <button class="schema-toggle" id="schemaToggle" aria-expanded="false">Schema <span class="chev">▾</span></button>
+  </header>
+
+  <div class="layout">
+
+    <main class="workbench">
+
+      <section class="panel input-panel">
+        <label for="nlInput" class="panel-label">Ask in plain English</label>
+        <textarea id="nlInput" placeholder="e.g. Find the top 5 customers by total spend" rows="3"></textarea>
+
+        <div class="examples" id="examples">
+          <button class="chip" data-q="List all customers">List all customers</button>
+          <button class="chip" data-q="Show me all orders placed in the last 30 days">Orders in last 30 days</button>
+          <button class="chip" data-q="How many products are out of stock?">Out-of-stock products</button>
+          <button class="chip" data-q="Find the top 5 customers by total spend">Top 5 customers by spend</button>
+          <button class="chip" data-q="Show all employees in Engineering hired after 2022">Engineering hires after 2022</button>
+        </div>
+
+        <div class="input-row">
+          <span class="hint" id="inputHint"></span>
+          <button class="run-btn" id="runBtn">Translate &amp; run →</button>
+        </div>
+      </section>
+
+      <section class="panel sql-panel" id="sqlPanel" hidden>
+        <div class="panel-head">
+          <label class="panel-label">Generated SQL <span class="source-badge" id="sourceBadge"></span></label>
+          <div class="panel-actions">
+            <button class="ghost-btn" id="editToggle">Edit</button>
+            <button class="ghost-btn" id="copySqlBtn">Copy</button>
+          </div>
+        </div>
+        <pre class="sql-display" id="sqlDisplay" contenteditable="false"></pre>
+        <div class="edit-row" id="editRow" hidden>
+          <button class="run-btn small" id="rerunBtn">Run edited query</button>
+        </div>
+      </section>
+
+      <section class="panel results-panel" id="resultsPanel" hidden>
+        <div class="panel-head">
+          <label class="panel-label" id="resultsLabel">Results</label>
+          <div class="panel-actions">
+            <button class="ghost-btn" id="exportBtn">Export CSV</button>
+          </div>
+        </div>
+        <div class="table-scroll" id="tableScroll"></div>
+        <div class="pager" id="pager" hidden>
+          <button id="prevPage" class="ghost-btn">‹ Prev</button>
+          <span id="pageIndicator"></span>
+          <button id="nextPage" class="ghost-btn">Next ›</button>
+        </div>
+      </section>
+
+      <section class="panel message-panel" id="messagePanel" hidden></section>
+
+    </main>
+
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-block" id="schemaBlock">
+        <h2>Schema</h2>
+        <div id="schemaList" class="schema-list">Loading schema…</div>
+      </div>
+      <div class="sidebar-block">
+        <h2>History <span class="muted">this session</span></h2>
+        <div id="historyList" class="history-list">
+          <p class="empty-note">Run a query to start building history.</p>
+        </div>
+      </div>
+    </aside>
+
+  </div>
+</div>
+
+<script src="/static/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+{
+  "name": "nl2sql-engine",
+  "version": "1.0.0",
+  "description": "Natural Language to SQL Engine",
+  "scripts": {
+    "build": "echo \"Ready for Netlify\"",
+    "seed": "node scripts/seed.js",
+    "start": "node netlify/functions/api.js"
+  },
+  "dependencies": {
+    "@google/generative-ai": "latest",
+    "better-sqlite3": "^11.5.0",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "serverless-http": "^3.2.0"
+  },
+  "author": "",
+  "license": "ISC"
+}
